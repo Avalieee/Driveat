@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>Restaurants - Page d'accueil</title>
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1>RESTAURANTS</h1>
+            <nav>
+                <ul>
+                    <li><a href="../acceuil/index.html">Retour</a></li>
+                    <li><a href="../blog/index.html">Blog</a></li>
+                    <li><a href="../propos/index.html">À propos</a></li>
+                    <li><a href="../compte/index.html">Mon compte</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Carrousel général de présentation avec les sections des cuisines par-dessus -->
+        <div class="slider">
+            <div class="slides">
+                <img src="image/paf.jpg" class="slide" alt="Plat français" />
+                <img src="image/lasagnes.jpeg" class="slide" alt="Lasagnes italiennes" />
+                <img src="image3.jpg" class="slide" alt="Cuisine Américaine" />
+            </div>
+
+            <!-- Flèches de navigation -->
+            <button class="slider-nav-left" id="prev-btn">&lt;</button>
+            <button class="slider-nav-right" id="next-btn">&gt;</button>
+
+            <div class="slider-nav">
+                <span class="nav-dot"></span>
+                <span class="nav-dot"></span>
+                <span class="nav-dot"></span>
+            </div>
+
+            <!-- Sections des cuisines par-dessus les images du carrousel -->
+            <div class="cuisine-overlay" id="fr-section">
+                <h2>Cuisine Française</h2>
+            </div>
+            <div class="cuisine-overlay" id="it-section">
+                <h2>Cuisine Italienne</h2>
+            </div>
+            <div class="cuisine-overlay" id="am-section">
+                <h2>Cuisine Américaine</h2>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2024 Restaurants. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript pour l'interaction avec les flèches et les sections des cuisines -->
+    <script>
+        let index = 0;
+        const slides = document.querySelector('.slides');
+        const navDots = document.querySelectorAll('.nav-dot');
+        const cuisineSections = document.querySelectorAll('.cuisine-overlay');
+        
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        // Fonction pour afficher la section cuisine correspondante
+        function updateCuisineOverlay() {
+            cuisineSections.forEach((section, i) => {
+                section.style.display = (i === index) ? 'block' : 'none';
+            });
+            updateNavDots();
+        }
+
+        // Fonction pour changer de slide
+        function showNextSlide() {
+            index = (index + 1) % totalSlides;
+            slides.style.transform = 'translateX(' + (-index * 100) + '%)';
+            updateCuisineOverlay();
+        }
+
+        // Fonction pour revenir à la slide précédente
+        function showPrevSlide() {
+            index = (index - 1 + totalSlides) % totalSlides;
+            slides.style.transform = 'translateX(' + (-index * 100) + '%)';
+            updateCuisineOverlay();
+        }
+
+        // Mise à jour des points de navigation
+        function updateNavDots() {
+            navDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Événements pour les flèches
+        document.getElementById('prev-btn').addEventListener('click', showPrevSlide);
+        document.getElementById('next-btn').addEventListener('click', showNextSlide);
+
+        // Événements pour les points de navigation
+        navDots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                index = i;
+                slides.style.transform = 'translateX(' + (-index * 100) + '%)';
+                updateCuisineOverlay();
+            });
+        });
+
+        // Initialiser l'affichage
+        updateCuisineOverlay();
+    </script>
+</body>
+
+</html>
